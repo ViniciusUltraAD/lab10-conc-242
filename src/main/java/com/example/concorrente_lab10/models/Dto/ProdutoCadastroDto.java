@@ -10,17 +10,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProdutoResponsePurchase {
+public class ProdutoCadastroDto {
 
     private String id;
 
     private String name;
 
-    private Integer quantity;
-
-    public ProdutoResponsePurchase(Produto produto) {
+    public ProdutoCadastroDto(Produto produto) {
         this.id = produto.getId();
         this.name = produto.getName();
-        this.quantity = produto.getQuantity().intValue();
     }
 }

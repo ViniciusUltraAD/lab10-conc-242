@@ -14,5 +14,10 @@ public class ProdutoResponseCompraDto {
 
     private String message;
 
-    private Produto produto;
+    private ProdutoResponsePurchase produtoResponsePurchase;
+
+    public ProdutoResponseCompraDto(Produto produto) {
+        this.message = "Compra realizada com sucesso.";
+        this.produtoResponsePurchase = new ProdutoResponsePurchase(produto);
+    }
 }

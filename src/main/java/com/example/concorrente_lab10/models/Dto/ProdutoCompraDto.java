@@ -1,11 +1,12 @@
 package com.example.concorrente_lab10.models.Dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.UUID;
 
 @Data
 @Builder
@@ -13,9 +14,10 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ProdutoCompraDto {
 
+    @NotBlank(message = "ID Não pode Ser Nulo")
+    @Pattern(regexp = "^\\+?(?:0|[1-9]\\d*)(?:\\.\\d+)?$", message = "Deve ser um número positivo")
     private String id;
 
-    private String name;
-
+    @Positive(message = "Quantidade Tem que ser positiva")
     private Integer quantity;
 }
