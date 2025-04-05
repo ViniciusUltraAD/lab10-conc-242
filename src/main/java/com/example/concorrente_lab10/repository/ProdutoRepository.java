@@ -9,8 +9,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @Repository
 public class ProdutoRepository {
 
-    private ConcurrentHashMap<String, Produto> produtoConcurrentHashMap;
+    private final ConcurrentHashMap<String, Produto> produtoConcurrentHashMap;
 
+    public ProdutoRepository() {
+        this.produtoConcurrentHashMap = new ConcurrentHashMap<>();
+    }
     public void cadastraProduto(Produto produto) {
         this.produtoConcurrentHashMap.put(produto.getId(), produto);
     }
