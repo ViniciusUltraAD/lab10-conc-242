@@ -36,13 +36,15 @@ public class Produto {
     }
 
     // Faz sentido o synchronized?
-    public synchronized void reduzirEstoque(@Positive(message = "Quantidade Tem que ser positiva") Integer quantity) {
-        int newQuantity = this.quantity.intValue() - quantity;
-        this.quantity.getAndSet(newQuantity); // Faz sentido?
-    }
-
     public synchronized void incrementarEstoque(@Positive(message = "Quantidade Tem que ser positiva") Integer quantity) {
         int newQuantity = this.quantity.intValue() + quantity;
         this.quantity.getAndSet(newQuantity); // Faz sentido?
+    }
+
+    public synchronized void compraRealizada(@Positive(message = "Quantidade Tem que ser positiva") Integer quantity) {
+        int newQuantity = this.quantity.intValue() - quantity;
+        this.quantity.getAndSet(newQuantity); // Faz sentido?
+        int newCountSold = this.count_sold.intValue() + quantity;
+        this.count_sold.getAndSet(newCountSold);
     }
 }

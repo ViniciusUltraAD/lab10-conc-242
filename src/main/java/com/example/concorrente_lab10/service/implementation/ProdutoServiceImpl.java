@@ -36,7 +36,7 @@ public class ProdutoServiceImpl implements ProdutoService {
         if (produto.getQuantity().get() < produtoCompraDto.getQuantity()) {
             throw new IllegalArgumentException();
         }
-        produto.reduzirEstoque(produtoCompraDto.getQuantity());
+        produto.compraRealizada(produtoCompraDto.getQuantity());
         return new ProdutoResponseCompraDto(produto);
     }
 
