@@ -61,8 +61,8 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public ProdutoResponseCadastroDto cadastraProduto(ProdutoPostDto produtoPostDto) {
-        lock.writeLock().lock();
         Produto produto = new Produto(produtoPostDto);
+        lock.writeLock().lock();
         try {
             if(this.produtoRepository.containsProduto(produtoPostDto.getId())) {
                 throw new IllegalArgumentException(); // COLOCAR O ERRO
