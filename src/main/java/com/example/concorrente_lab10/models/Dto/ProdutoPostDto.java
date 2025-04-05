@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class ProdutoPostDto {
 
     @NotBlank(message = "ID Não pode Ser Nulo")
-    @Pattern(regexp = "^\\+?(?:0|[1-9]\\d*)(?:\\.\\d+)?$", message = "Deve ser um número positivo")
+    @Pattern(regexp = "^[1-9]\\d*$", message = "Deve ser um número positivo")
     private String id;
 
     @NotBlank(message = "Nome Não pode ser nulo")
