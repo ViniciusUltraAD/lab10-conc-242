@@ -14,7 +14,7 @@ public class ProdutoRepository {
     public ProdutoRepository() {
         this.produtoConcurrentHashMap = new ConcurrentHashMap<>();
     }
-    public void cadastraProduto(Produto produto) {
+    public void salvaProduto(Produto produto) {
         this.produtoConcurrentHashMap.put(produto.getId(), produto);
     }
 
@@ -24,5 +24,9 @@ public class ProdutoRepository {
 
     public List<Produto> getTodosProdutos() {
         return this.produtoConcurrentHashMap.values().stream().toList();
+    }
+
+    public boolean containsProduto(String id) {
+        return this.produtoConcurrentHashMap.containsKey(id);
     }
 }

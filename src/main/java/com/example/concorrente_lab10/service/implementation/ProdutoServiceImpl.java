@@ -8,11 +8,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
 
     private final ProdutoRepository produtoRepository;
+
+    private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
     public ProdutoServiceImpl(ProdutoRepository produtoRepository) {
         this.produtoRepository = produtoRepository;
@@ -20,43 +23,79 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public List<ProdutoGetDto> getTodosProdutos() {
-        return this.produtoRepository.getTodosProdutos().stream().map(ProdutoGetDto::new).toList();
+        lock.readLock().lock();
+        try {
+            return this.produtoRepository.getTodosProdutos().stream().map(ProdutoGetDto::new).toList();
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 
     @Override
     public ProdutoGetDto getProduto(String id) {
-        Produto produto = this.getProdutoEntity(id);
-        return new ProdutoGetDto(produto);
+        lock.readLock().lock();
+        try {
+            Produto produto = this.getProdutoEntity(id);
+            return new ProdutoGetDto(produto); // isso pode sair do lock?
+        } finally {
+            lock.readLock().unlock();
+        }
+
     }
 
     @Override
     @Transactional
     public ProdutoResponseCompraDto compraProduto(ProdutoCompraDto produtoCompraDto) {
-        Produto produto = this.getProdutoEntity(produtoCompraDto.getId());
-        if (produto.getQuantity().get() < produtoCompraDto.getQuantity()) {
-            throw new IllegalArgumentException();
+        lock.writeLock().lock();
+        try{
+            Produto produto = this.getProdutoEntity(produtoCompraDto.getId());
+            if (produto.getQuantity().get() < produtoCompraDto.getQuantity()) {
+                throw new IllegalArgumentException();
+            }
+            produto.compraRealizada(produtoCompraDto.getQuantity());
+            return new ProdutoResponseCompraDto(produto);
+        } finally {
+            lock.writeLock().unlock();
         }
-        produto.compraRealizada(produtoCompraDto.getQuantity());
-        return new ProdutoResponseCompraDto(produto);
     }
 
     @Override
     public ProdutoResponseCadastroDto cadastraProduto(ProdutoPostDto produtoPostDto) {
+        lock.writeLock().lock();
         Produto produto = new Produto(produtoPostDto);
-        this.produtoRepository.cadastraProduto(produto);
-        return new ProdutoResponseCadastroDto(produto);
+        try {
+            if(this.produtoRepository.containsProduto(produtoPostDto.getId())) {
+                throw new IllegalArgumentException(); // COLOCAR O ERRO
+            }
+            this.produtoRepository.salvaProduto(produto);
+            return new ProdutoResponseCadastroDto(produto);
+        } finally {
+            lock.writeLock().unlock();
+        }
     }
 
     @Override
     public ProdutoResponseUpdateEstoqueDto atualizaEstoque(String id, ProdutoPutDto produtoPutDto) {
-        Produto produto = this.getProdutoEntity(id);
-        produto.incrementarEstoque(produtoPutDto.getQuantity());
-        return new ProdutoResponseUpdateEstoqueDto(produto);
+        lock.writeLock().lock();
+        try {
+            Produto produto = this.getProdutoEntity(id);
+            produto.incrementarEstoque(produtoPutDto.getQuantity());
+            this.produtoRepository.salvaProduto(produto);
+            return new ProdutoResponseUpdateEstoqueDto(produto);
+        } finally {
+            lock.writeLock().unlock();
+        }
     }
 
+    //TODO
     @Override
     public ProdutoResponseRelatorioDto geraRelatorio() {
-        return null;
+        lock.readLock().lock();
+        try{
+            return null;
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 
     private Produto getProdutoEntity(String id) {
