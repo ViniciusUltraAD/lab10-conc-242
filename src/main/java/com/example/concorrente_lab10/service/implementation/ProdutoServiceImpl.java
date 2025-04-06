@@ -1,5 +1,8 @@
 package com.example.concorrente_lab10.service.implementation;
 
+import com.example.concorrente_lab10.exceptions.ProdutoExceptions.ProdutoIdJaExiste;
+import com.example.concorrente_lab10.exceptions.ProdutoExceptions.ProdutoNotFound;
+import com.example.concorrente_lab10.exceptions.ProdutoExceptions.ProdutoQuantitadeInsuficiente;
 import com.example.concorrente_lab10.models.Dto.*;
 import com.example.concorrente_lab10.models.Produto;
 import com.example.concorrente_lab10.repository.ProdutoRepository;
@@ -31,12 +34,13 @@ public class ProdutoServiceImpl implements ProdutoService {
         }
     }
 
+    //Essa função assim como algumas outras, não deveria ser assíncrona?
     @Override
     public ProdutoGetDto getProduto(String id) {
         lock.readLock().lock();
         try {
             Produto produto = this.getProdutoEntity(id);
-            return new ProdutoGetDto(produto); // isso pode sair do lock?
+            return new ProdutoGetDto(produto); // isso pode sair do lock? //Response: Provavelmente sim.
         } finally {
             lock.readLock().unlock();
         }
@@ -49,8 +53,9 @@ public class ProdutoServiceImpl implements ProdutoService {
         lock.writeLock().lock();
         try{
             Produto produto = this.getProdutoEntity(produtoCompraDto.getId());
+            //Precisa refatorar? Quando o professor retorna, ele coloca a disponibilidade também.
             if (produto.getQuantity().get() < produtoCompraDto.getQuantity()) {
-                throw new IllegalArgumentException();
+                throw new ProdutoQuantitadeInsuficiente("Estoque insuficiente.");
             }
             produto.compraRealizada(produtoCompraDto.getQuantity());
             return new ProdutoResponseCompraDto(produto);
@@ -65,7 +70,7 @@ public class ProdutoServiceImpl implements ProdutoService {
         lock.writeLock().lock();
         try {
             if(this.produtoRepository.containsProduto(produtoPostDto.getId())) {
-                throw new IllegalArgumentException(); // COLOCAR O ERRO
+                throw new ProdutoIdJaExiste();
             }
             this.produtoRepository.salvaProduto(produto);
             return new ProdutoResponseCadastroDto(produto);
@@ -101,7 +106,7 @@ public class ProdutoServiceImpl implements ProdutoService {
     private Produto getProdutoEntity(String id) {
         Produto produto = this.produtoRepository.getProduto(id);
         if (produto == null) {
-            throw new IllegalArgumentException(); // Jogar aq o erro
+            throw new ProdutoNotFound();
         }
         return produto;
     }
