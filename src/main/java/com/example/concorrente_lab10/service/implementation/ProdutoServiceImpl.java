@@ -88,12 +88,20 @@ public class ProdutoServiceImpl implements ProdutoService {
         }
     }
 
-    //TODO
     @Override
-    public ProdutoResponseRelatorioDto geraRelatorio() {
+    public RelatorioResponseDto geraRelatorio() {
         lock.readLock().lock();
         try{
-            return null;
+            List<ProdutoResponseRelatorioDto> produtos = this.produtoRepository.getTodosProdutos().stream()
+                    .filter(produto -> produto.getCountSold().intValue() > 0)
+                    .map(ProdutoResponseRelatorioDto::new)
+                    .toList();
+
+            int totalSale = produtos.stream()
+                    .mapToInt(ProdutoResponseRelatorioDto::getCountSold)
+                    .reduce(0, Integer::sum);
+
+            return new RelatorioResponseDto(totalSale, produtos);
         } finally {
             lock.readLock().unlock();
         }

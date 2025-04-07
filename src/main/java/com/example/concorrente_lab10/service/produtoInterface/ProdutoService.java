@@ -10,14 +10,12 @@ public interface ProdutoService {
 
     ProdutoGetDto getProduto(String id);
 
-    //TODO ver mensagem
     ProdutoResponseCompraDto compraProduto(ProdutoCompraDto produtoCompraDto);
 
-    //TODO ver mensagem
     ProdutoResponseCadastroDto cadastraProduto(ProdutoPostDto produtoPostDto);
 
     ProdutoResponseUpdateEstoqueDto atualizaEstoque(String id, ProdutoPutDto produtoPutDto);
 
-    ProdutoResponseRelatorioDto geraRelatorio();
+    RelatorioResponseDto geraRelatorio();
 
 }

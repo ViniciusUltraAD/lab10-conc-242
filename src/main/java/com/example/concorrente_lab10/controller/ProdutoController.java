@@ -88,7 +88,7 @@ public class ProdutoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Relatorio Gerado com Sucesso."),
     })
-    public ResponseEntity<ProdutoResponseRelatorioDto> geraRelatorio() {
+    public ResponseEntity<RelatorioResponseDto> geraRelatorio() {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(produtoService.geraRelatorio());
