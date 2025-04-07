@@ -16,6 +16,6 @@ public interface ProdutoService {
 
     ProdutoResponseUpdateEstoqueDto atualizaEstoque(String id, ProdutoPutDto produtoPutDto);
 
-    RelatorioResponseDto geraRelatorio();
+    RelatorioVendasResponseDto geraRelatorio();
 
 }

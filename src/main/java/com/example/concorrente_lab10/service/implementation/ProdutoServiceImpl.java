@@ -89,7 +89,7 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
-    public RelatorioResponseDto geraRelatorio() {
+    public RelatorioVendasResponseDto geraRelatorio() {
         lock.readLock().lock();
         try{
             List<ProdutoResponseRelatorioDto> produtos = this.produtoRepository.getTodosProdutos().stream()
@@ -101,7 +101,7 @@ public class ProdutoServiceImpl implements ProdutoService {
                     .mapToInt(ProdutoResponseRelatorioDto::getCountSold)
                     .reduce(0, Integer::sum);
 
-            return new RelatorioResponseDto(totalSale, produtos);
+            return new RelatorioVendasResponseDto(totalSale, produtos);
         } finally {
             lock.readLock().unlock();
         }
