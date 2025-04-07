@@ -77,7 +77,7 @@ public class ProdutoController {
     })
     public ResponseEntity<ProdutoResponseUpdateEstoqueDto> atualizaEstoque(
             @PathVariable String id,
-            @RequestBody ProdutoPutDto produtoPutDto) {
+            @RequestBody @Valid ProdutoPutDto produtoPutDto) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(produtoService.atualizaEstoque(id, produtoPutDto));

@@ -36,13 +36,12 @@ public class Produto {
     }
 
     public void incrementarEstoque(@Positive(message = "Quantidade Tem que ser positiva") Integer quantity) {
-        int newQuantity = this.quantity.intValue() + quantity;
-        this.quantity.getAndSet(newQuantity); // Faz sentido?
+        this.quantity.getAndSet(quantity);
     }
 
     public void compraRealizada(@Positive(message = "Quantidade Tem que ser positiva") Integer quantity) {
         int newQuantity = this.quantity.intValue() - quantity;
-        this.quantity.getAndSet(newQuantity); // Faz sentido?
+        this.quantity.getAndSet(newQuantity);
         int newCountSold = this.count_sold.intValue() + quantity;
         this.count_sold.getAndSet(newCountSold);
     }
