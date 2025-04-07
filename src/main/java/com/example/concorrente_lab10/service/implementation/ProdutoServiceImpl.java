@@ -17,7 +17,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     private final ProdutoRepository produtoRepository;
 
-    private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+    private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true);
 
     public ProdutoServiceImpl(ProdutoRepository produtoRepository) {
         this.produtoRepository = produtoRepository;
