@@ -25,14 +25,14 @@ public class Produto {
 
     private AtomicInteger quantity;
 
-    private AtomicInteger count_sold;
+    private AtomicInteger countSold;
 
     public Produto(ProdutoPostDto produtoPostDto) {
         this.id = produtoPostDto.getId();
         this.name = produtoPostDto.getName();
         this.price = produtoPostDto.getPrice();
         this.quantity = new AtomicInteger(produtoPostDto.getQuantity());
-        this.count_sold = new AtomicInteger();
+        this.countSold = new AtomicInteger();
     }
 
     public void incrementarEstoque(@Positive(message = "Quantidade Tem que ser positiva") Integer quantity) {
@@ -42,7 +42,7 @@ public class Produto {
     public void compraRealizada(@Positive(message = "Quantidade Tem que ser positiva") Integer quantity) {
         int newQuantity = this.quantity.intValue() - quantity;
         this.quantity.getAndSet(newQuantity);
-        int newCountSold = this.count_sold.intValue() + quantity;
-        this.count_sold.getAndSet(newCountSold);
+        int newCountSold = this.countSold.intValue() + quantity;
+        this.countSold.getAndSet(newCountSold);
     }
 }
