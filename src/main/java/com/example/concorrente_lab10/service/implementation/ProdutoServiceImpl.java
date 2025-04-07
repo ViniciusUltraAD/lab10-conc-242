@@ -8,7 +8,6 @@ import com.example.concorrente_lab10.models.Produto;
 import com.example.concorrente_lab10.repository.ProdutoRepository;
 import com.example.concorrente_lab10.service.produtoInterface.ProdutoService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -47,7 +46,6 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
-    @Transactional
     public ProdutoResponseCompraDto compraProduto(ProdutoCompraDto produtoCompraDto) {
         lock.writeLock().lock();
         try{
