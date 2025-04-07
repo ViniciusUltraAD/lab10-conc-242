@@ -34,13 +34,12 @@ public class ProdutoServiceImpl implements ProdutoService {
         }
     }
 
-    //Essa função assim como algumas outras, não deveria ser assíncrona?
     @Override
     public ProdutoGetDto getProduto(String id) {
         lock.readLock().lock();
         try {
             Produto produto = this.getProdutoEntity(id);
-            return new ProdutoGetDto(produto); // isso pode sair do lock? //Response: Provavelmente sim.
+            return new ProdutoGetDto(produto);
         } finally {
             lock.readLock().unlock();
         }
@@ -53,9 +52,8 @@ public class ProdutoServiceImpl implements ProdutoService {
         lock.writeLock().lock();
         try{
             Produto produto = this.getProdutoEntity(produtoCompraDto.getId());
-            //Precisa refatorar? Quando o professor retorna, ele coloca a disponibilidade também.
             if (produto.getQuantity().get() < produtoCompraDto.getQuantity()) {
-                throw new ProdutoQuantitadeInsuficiente("Estoque insuficiente.");
+                throw new ProdutoQuantitadeInsuficiente(produto.getQuantity().get());
             }
             produto.compraRealizada(produtoCompraDto.getQuantity());
             return new ProdutoResponseCompraDto(produto);
@@ -73,10 +71,10 @@ public class ProdutoServiceImpl implements ProdutoService {
                 throw new ProdutoIdJaExiste();
             }
             this.produtoRepository.salvaProduto(produto);
-            return new ProdutoResponseCadastroDto(produto);
         } finally {
             lock.writeLock().unlock();
         }
+        return new ProdutoResponseCadastroDto(produto);
     }
 
     @Override

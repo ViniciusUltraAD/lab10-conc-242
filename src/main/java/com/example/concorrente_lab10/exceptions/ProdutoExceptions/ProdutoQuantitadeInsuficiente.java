@@ -7,9 +7,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class ProdutoQuantitadeInsuficiente extends ProgramException {
 
-    //Essa excecao recebe mensagem pois a quantitade que o usuário quer comprar e a quantidade disponível variam.
-    //O exemplo está no documento lab10.
-    public ProdutoQuantitadeInsuficiente(String message) {
-        super(message);
+    public ProdutoQuantitadeInsuficiente(int quantidade) {
+
+        super("Estoque insuficiente. Quantidade disponível: " + quantidade);
     }
 }
