@@ -5,7 +5,6 @@ import com.example.concorrente_lab10.models.Dto.ProdutoPostDto;
 import com.example.concorrente_lab10.models.Produto;
 import com.example.concorrente_lab10.repository.ProdutoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
