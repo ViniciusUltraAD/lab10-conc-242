@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 /**
  * DTO de resposta para a operação de cadastro de um produto.
  *
- * <p>Contém uma mensagem de sucesso e os dados do produto recém-cadastrado.</p>
+ * Contém uma mensagem de sucesso e os dados do produto recém-cadastrado.
  */
 @Data
 @Builder

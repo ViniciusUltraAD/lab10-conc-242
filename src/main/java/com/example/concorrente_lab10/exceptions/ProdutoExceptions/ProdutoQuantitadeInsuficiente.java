@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * Exceção lançada quando se tenta comprar uma quantidade maior do que a disponível em estoque.
  *
- * <p>Retorna um código HTTP 400 (BAD REQUEST), indicando que a solicitação do cliente é inválida
- * devido à indisponibilidade de estoque.</p>
+ * Retorna um código HTTP 400 (BAD REQUEST), indicando que a solicitação do cliente é inválida
+ * devido à indisponibilidade de estoque.
  */
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class ProdutoQuantitadeInsuficiente extends ProgramException {

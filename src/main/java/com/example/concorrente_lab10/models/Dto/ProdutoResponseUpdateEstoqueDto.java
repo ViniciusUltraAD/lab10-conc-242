@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 /**
  * DTO utilizado como resposta após a atualização do estoque de um produto.
  *
- * <p>Contém uma mensagem de status e a quantidade restante no estoque.</p>
+ * Contém uma mensagem de status e a quantidade restante no estoque.
  */
 @Data
 @Builder

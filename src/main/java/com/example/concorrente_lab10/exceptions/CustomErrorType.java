@@ -13,8 +13,8 @@ import java.util.List;
 /**
  * Classe que representa a estrutura de erro personalizada retornada pela API.
  *
- * <p>Contém informações como timestamp, mensagem geral e lista de erros específicos,
- * permitindo respostas mais descritivas e estruturadas em casos de exceções.</p>
+ * Contém informações como timestamp, mensagem geral e lista de erros específicos,
+ * permitindo respostas mais descritivas e estruturadas em casos de exceções.
  */
 @Data
 @Builder

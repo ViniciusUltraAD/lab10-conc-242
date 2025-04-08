@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 /**
  * DTO utilizado como resposta para o relatório de vendas.
  *
- * <p>Contém o total de vendas realizadas e uma lista de produtos com suas respectivas quantidades vendidas.</p>
+ * Contém o total de vendas realizadas e uma lista de produtos com suas respectivas quantidades vendidas.
  */
 @Data
 @Builder

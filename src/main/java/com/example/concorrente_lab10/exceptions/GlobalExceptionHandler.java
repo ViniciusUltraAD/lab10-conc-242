@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Classe responsável por capturar exceções lançadas pelos controladores da aplicação
  * e retornar respostas estruturadas e consistentes para o cliente.
  *
- * <p>Utiliza o mecanismo do Spring de tratamento global de exceções com {@code @RestControllerAdvice}.</p>
+ * Utiliza o mecanismo do Spring de tratamento global de exceções com {@code @RestControllerAdvice}.
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {

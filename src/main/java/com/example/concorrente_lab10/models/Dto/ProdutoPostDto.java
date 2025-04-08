@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 /**
  * DTO utilizado para o cadastro de um novo produto.
  *
- * <p>Inclui os campos obrigatórios para a criação: ID, nome, preço e quantidade.
- * Também possui anotações de validação para garantir a integridade dos dados enviados pelo cliente.</p>
+ * Inclui os campos obrigatórios para a criação: ID, nome, preço e quantidade.
+ * Também possui anotações de validação para garantir a integridade dos dados enviados pelo cliente.
  */
 @Data
 @Builder
@@ -22,7 +22,7 @@ public class ProdutoPostDto {
 
     /**
      * Identificador do produto.
-     * <p>Não pode ser nulo e deve ser um número positivo.</p>
+     * Não pode ser nulo e deve ser um número positivo.
      */
     @NotBlank(message = "ID Não pode Ser Nulo")
     @Pattern(regexp = "^[1-9]\\d*$", message = "Deve ser um número positivo")
@@ -30,21 +30,21 @@ public class ProdutoPostDto {
 
     /**
      * Nome do produto.
-     * <p>Não pode ser nulo ou vazio.</p>
+     * Não pode ser nulo ou vazio.
      */
     @NotBlank(message = "Nome Não pode ser nulo")
     private String name;
 
     /**
      * Preço do produto.
-     * <p>Deve ser um número positivo.</p>
+     * Deve ser um número positivo.
      */
     @Positive(message = "Preço Tem que ser positivo")
     private Double price;
 
     /**
      * Quantidade inicial do produto no estoque.
-     * <p>Deve ser um número inteiro positivo.</p>
+     * Deve ser um número inteiro positivo.
      */
     @Positive(message = "Quantidade Tem que ser positiva")
     private Integer quantity;

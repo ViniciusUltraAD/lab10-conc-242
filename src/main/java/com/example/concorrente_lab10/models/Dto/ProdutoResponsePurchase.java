@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 /**
  * DTO utilizado para representar os dados principais de um produto após a realização de uma compra.
  *
- * <p>Contém o identificador, nome e a quantidade restante em estoque.</p>
+ * Contém o identificador, nome e a quantidade restante em estoque.
  */
 @Data
 @Builder

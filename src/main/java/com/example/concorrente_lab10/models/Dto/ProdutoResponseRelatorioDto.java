@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 /**
  * DTO utilizado para representar um produto no relatório de vendas.
  *
- * <p>Inclui o identificador, nome do produto e a quantidade total vendida.</p>
+ * Inclui o identificador, nome do produto e a quantidade total vendida.
  */
 @Data
 @Builder

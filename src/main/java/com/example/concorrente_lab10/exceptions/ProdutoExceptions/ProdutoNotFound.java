@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * Exceção lançada quando um produto solicitado não é encontrado no sistema.
  *
- * <p>Esta exceção resulta em um código HTTP 404 (NOT FOUND), indicando que o recurso não existe.</p>
+ * Esta exceção resulta em um código HTTP 404 (NOT FOUND), indicando que o recurso não existe.
  */
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class ProdutoNotFound extends ProgramException {

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 /**
  * DTO de resposta para a operação de compra de um produto.
  *
- * <p>Contém uma mensagem de confirmação e os dados do produto após a compra.</p>
+ * Contém uma mensagem de confirmação e os dados do produto após a compra.
  */
 @Data
 @Builder

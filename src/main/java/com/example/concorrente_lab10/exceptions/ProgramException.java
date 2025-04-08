@@ -3,11 +3,11 @@ package com.example.concorrente_lab10.exceptions;
 /**
  * Classe base para todas as exceções personalizadas da aplicação.
  *
- * <p>Estende {@link RuntimeException} e permite definir mensagens específicas
- * para os erros de negócio tratados no sistema.</p>
+ * Estende {@link RuntimeException} e permite definir mensagens específicas
+ * para os erros de negócio tratados no sistema.
  *
- * <p>Utilizada em conjunto com o {@link com.example.concorrente_lab10.exceptions.GlobalExceptionHandler}
- * para retornar respostas padronizadas ao cliente.</p>
+ * Utilizada em conjunto com o {@link com.example.concorrente_lab10.exceptions.GlobalExceptionHandler}
+ * para retornar respostas padronizadas ao cliente.
  */
 public class ProgramException extends RuntimeException {
 

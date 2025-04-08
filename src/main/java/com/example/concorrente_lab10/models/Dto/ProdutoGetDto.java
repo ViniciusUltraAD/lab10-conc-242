@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 /**
  * DTO utilizado para retornar os dados de um produto ao cliente.
  *
- * <p>Inclui informações como identificador, nome, preço e quantidade disponível.</p>
+ * Inclui informações como identificador, nome, preço e quantidade disponível.
  */
 @Data
 @Builder
@@ -46,6 +46,6 @@ public class ProdutoGetDto {
         this.id = produto.getId();
         this.name = produto.getName();
         this.price = produto.getPrice();
-        this.quantity = produto.getQuantity().get();
+        this.quantity = produto.getQuantity();
     }
 }
