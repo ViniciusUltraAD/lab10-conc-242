@@ -16,10 +16,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * Implementação da interface {@link ProdutoService} que fornece operações de
  * gerenciamento de produtos, como cadastro, compra, consulta e geração de relatório.
  *
- * <p>
  * Usa {@link ReentrantReadWriteLock} para garantir segurança em ambientes concorrentes:
  * leituras simultâneas são permitidas, enquanto escritas exigem exclusividade.
- * </p>
  */
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
@@ -27,10 +25,7 @@ public class ProdutoServiceImpl implements ProdutoService {
     /**
      * Repositório responsável por armazenar e recuperar objetos do tipo {@link Produto}.
      *
-     * <p>
-     * Implementado com {@link java.util.concurrent.ConcurrentHashMap}, garantindo
-     * segurança em ambientes concorrentes sem a necessidade de um banco de dados.
-     * </p>
+     * Implementado com HashMap.
      */
     private final ProdutoRepository produtoRepository;
 
@@ -38,15 +33,11 @@ public class ProdutoServiceImpl implements ProdutoService {
      * Lock do tipo {@link ReentrantReadWriteLock} utilizado para controlar o acesso concorrente
      * aos métodos da classe que leem e modificam o estado dos produtos.
      *
-     * <p>
      * - A leitura (com `readLock()`) permite múltiplas threads simultâneas sem bloqueio.<br>
      * - A escrita (com `writeLock()`) garante exclusividade e impede leituras enquanto ocorre a modificação.
-     * </p>
      *
-     * <p>
      * O construtor recebe o argumento `true` para ativar a política de prioridade justa (fairness),
      * evitando que threads de leitura fiquem presas indefinidamente quando há muitas escritas.
-     * </p>
      */
     private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true);
 
@@ -106,8 +97,8 @@ public class ProdutoServiceImpl implements ProdutoService {
         lock.writeLock().lock();
         try{
             Produto produto = this.getProdutoEntity(produtoCompraDto.getId());
-            if (produto.getQuantity().get() < produtoCompraDto.getQuantity()) {
-                throw new ProdutoQuantitadeInsuficiente(produto.getQuantity().get());
+            if (produto.getQuantity() < produtoCompraDto.getQuantity()) {
+                throw new ProdutoQuantitadeInsuficiente(produto.getQuantity());
             }
             produto.compraRealizada(produtoCompraDto.getQuantity());
             return new ProdutoResponseCompraDto(produto);

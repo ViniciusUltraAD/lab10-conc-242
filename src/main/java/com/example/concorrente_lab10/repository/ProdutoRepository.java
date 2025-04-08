@@ -3,13 +3,13 @@ package com.example.concorrente_lab10.repository;
 import com.example.concorrente_lab10.models.Produto;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Repositório em memória para manipulação de produtos.
  *
- * <p>Utiliza {@link ConcurrentHashMap} para permitir operações seguras em ambientes concorrentes.</p>
+ * Utiliza HashMap como base simulando um banco de dados indexado por índice.
  */
 @Repository
 public class ProdutoRepository {
@@ -17,13 +17,13 @@ public class ProdutoRepository {
     /**
      * Estrutura de dados que armazena os produtos por ID.
      */
-    private final ConcurrentHashMap<String, Produto> produtoConcurrentHashMap;
+    private final HashMap<String, Produto> produtoHashMap;
 
     /**
-     * Construtor padrão que inicializa o {@code ConcurrentHashMap}.
+     * Construtor padrão que inicializa o {@code HashMap}.
      */
     public ProdutoRepository() {
-        this.produtoConcurrentHashMap = new ConcurrentHashMap<>();
+        this.produtoHashMap = new HashMap<>();
     }
 
     /**
@@ -32,7 +32,7 @@ public class ProdutoRepository {
      * @param produto Produto a ser salvo.
      */
     public void salvaProduto(Produto produto) {
-        this.produtoConcurrentHashMap.put(produto.getId(), produto);
+        this.produtoHashMap.put(produto.getId(), produto);
     }
 
     /**
@@ -42,7 +42,7 @@ public class ProdutoRepository {
      * @return Produto correspondente ao ID, ou {@code null} se não encontrado.
      */
     public Produto getProduto(String id){
-        return this.produtoConcurrentHashMap.get(id);
+        return this.produtoHashMap.get(id);
     }
 
     /**
@@ -51,7 +51,7 @@ public class ProdutoRepository {
      * @return Lista com todos os produtos.
      */
     public List<Produto> getTodosProdutos() {
-        return this.produtoConcurrentHashMap.values().stream().toList();
+        return this.produtoHashMap.values().stream().toList();
     }
 
     /**
@@ -61,6 +61,6 @@ public class ProdutoRepository {
      * @return {@code true} se o produto existe, {@code false} caso contrário.
      */
     public boolean containsProduto(String id) {
-        return this.produtoConcurrentHashMap.containsKey(id);
+        return this.produtoHashMap.containsKey(id);
     }
 }

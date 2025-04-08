@@ -8,13 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 /**
  * Entidade que representa um produto no sistema.
  *
- * <p>Contém informações de identificação, nome, preço, quantidade em estoque e número de vendas realizadas.
- * Utiliza {@link AtomicInteger} para garantir segurança em operações concorrentes de leitura e escrita.</p>
+ * Contém informações de identificação, nome, preço, quantidade em estoque e número de vendas realizadas.
  */
 @Entity
 @Data
@@ -39,14 +36,14 @@ public class Produto {
     private Double price;
 
     /**
-     * Quantidade disponível em estoque. Representado por {@link AtomicInteger} para segurança em concorrência.
+     * Quantidade disponível em estoque.
      */
-    private AtomicInteger quantity;
+    private Integer quantity;
 
     /**
      * Quantidade total de unidades vendidas.
      */
-    private AtomicInteger countSold;
+    private Integer countSold;
 
     /**
      * Construtor que inicializa um {@code Produto} com base nos dados recebidos via {@link ProdutoPostDto}.
@@ -57,8 +54,8 @@ public class Produto {
         this.id = produtoPostDto.getId();
         this.name = produtoPostDto.getName();
         this.price = produtoPostDto.getPrice();
-        this.quantity = new AtomicInteger(produtoPostDto.getQuantity());
-        this.countSold = new AtomicInteger();
+        this.quantity = produtoPostDto.getQuantity();
+        this.countSold = 0;
     }
 
     /**
@@ -68,7 +65,7 @@ public class Produto {
      * @throws IllegalArgumentException se {@code quantity} for nulo ou não positivo.
      */
     public void incrementarEstoque(@Positive(message = "Quantidade Tem que ser positiva") Integer quantity) {
-        this.quantity.getAndSet(quantity);
+        this.quantity = quantity;
     }
 
     /**
@@ -79,8 +76,8 @@ public class Produto {
      */
     public void compraRealizada(@Positive(message = "Quantidade Tem que ser positiva") Integer quantity) {
         int newQuantity = this.quantity.intValue() - quantity;
-        this.quantity.getAndSet(newQuantity);
+        this.quantity = newQuantity;
         int newCountSold = this.countSold.intValue() + quantity;
-        this.countSold.getAndSet(newCountSold);
+        this.countSold = newCountSold;
     }
 }
