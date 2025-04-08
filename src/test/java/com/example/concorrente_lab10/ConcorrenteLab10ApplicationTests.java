@@ -107,6 +107,7 @@ class ConcorrenteLab10ApplicationTests {
 
 		@Test
 		void concorrenteAmbiente() throws Exception {
+			long inicio = System.nanoTime();
 			ExecutorService executor = Executors.newFixedThreadPool(NUMERO_THREADS);
 
 			for(int i = 0; i < NUMERO_THREADS; i++) {
@@ -122,9 +123,35 @@ class ConcorrenteLab10ApplicationTests {
 			}
 			executor.shutdown();
 			executor.awaitTermination(2, TimeUnit.MINUTES);
+			
+			long fim = System.nanoTime();
+			long duracaoMs = (fim - inicio) / 1_000_000;
+			System.out.println("Tempo de execução (concorrente-integridade): " + duracaoMs + " ms");
 
 			assertEquals(50, produtoRepository.getProduto("1").getCountSold().intValue());
 
+		}
+
+		@Test
+		void serialEscrita() throws Exception {
+			
+			long inicio = System.nanoTime();
+
+			for(int i = 0; i < NUMERO_THREADS; i++) {
+
+				ProdutoCompraDto produtoCompraDto = new ProdutoCompraDto("1", 1);
+				driver.perform(post("/purchase")
+					.contentType(MediaType.APPLICATION_JSON)
+					.content(objectMapper.writeValueAsString(produtoCompraDto)))
+					.andExpect(status().isOk());
+			}
+
+			long fim = System.nanoTime();
+			long duracaoMs = (fim - inicio) / 1_000_000; // converte para milissegundos
+
+			System.out.println("Tempo de execução (serial-integridade): " + duracaoMs + " ms");
+
+			assertEquals(50, produtoRepository.getProduto("1").getCountSold().intValue());
 		}
 
 	}
