@@ -52,6 +52,9 @@ class ConcorrenteLab10ApplicationTests {
 	@DisplayName("Apenas para comparar a diferença de velocidade entre operacoes read concorrentes e seriais.")
 	class ambienteRead {
 
+		/*
+		 * Roda um ambiente de testes que roda várias requisições de leitura de forma concorrente.
+		 */
 		@Test
 		void concorrenteAmbienteRead() throws Exception {
 			long inicio = System.nanoTime();
@@ -79,6 +82,9 @@ class ConcorrenteLab10ApplicationTests {
 
 		}
 
+		/*
+		 * Roda um ambiente de testes que roda várias requisições de leitura de forma serial.
+		 */
 		@Test
 		void serialAmbienteRead() throws Exception {
 			long inicio = System.nanoTime();
@@ -105,8 +111,11 @@ class ConcorrenteLab10ApplicationTests {
 	@DisplayName("Testes de integridade junto às requisições")
 	class ambienteIntegridade {
 
+		/*
+		 * Roda um ambiente de testes que roda várias requisições de escrita de forma concorrente.
+		 */
 		@Test
-		void concorrenteAmbiente() throws Exception {
+		void concorrenteAmbienteWrite() throws Exception {
 			long inicio = System.nanoTime();
 			ExecutorService executor = Executors.newFixedThreadPool(NUMERO_THREADS);
 
@@ -132,8 +141,11 @@ class ConcorrenteLab10ApplicationTests {
 
 		}
 
+		/*
+		 * Roda um ambiente de testes que roda várias requisições de escrita de forma serial.
+		 */
 		@Test
-		void serialEscrita() throws Exception {
+		void serialEscritaWrite() throws Exception {
 			
 			long inicio = System.nanoTime();
 

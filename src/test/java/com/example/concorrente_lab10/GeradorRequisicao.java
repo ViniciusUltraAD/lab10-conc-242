@@ -27,6 +27,10 @@ public class GeradorRequisicao {
     private static final List<ProdutoCompraDto> produtosCompraDto = new ArrayList<>();
     private static final List<ProdutoPutDto> produtosPutDto = new ArrayList<>();
 
+    /*
+     * Rode esse main para rodar o gerador de requisições aleatórias, printando no terminal
+     * cada requisição, o que ela faz e o retorno HTTP.
+     */
     public static void main(String[] args) throws InterruptedException, IOException {
         ExecutorService executor = Executors.newFixedThreadPool(NUM_THREADS);
         setup();
@@ -42,6 +46,9 @@ public class GeradorRequisicao {
         executor.awaitTermination(10, TimeUnit.MINUTES);
     }
 
+    /*
+     * Escolhe aleatoriamente uma requisição para rodar.
+     */
     private static void acaoThread() {
         int action = random.nextInt(4);
 

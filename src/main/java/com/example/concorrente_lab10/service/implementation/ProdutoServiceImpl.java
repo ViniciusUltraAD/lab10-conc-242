@@ -25,7 +25,7 @@ public class ProdutoServiceImpl implements ProdutoService {
     /**
      * Repositório responsável por armazenar e recuperar objetos do tipo {@link Produto}.
      *
-     * Implementado com HashMap.
+     * Implementado com HashMap para indexar diretamente os produtos com seus IDs.
      */
     private final ProdutoRepository produtoRepository;
 
