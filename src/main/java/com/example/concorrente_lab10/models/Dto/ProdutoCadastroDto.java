@@ -8,18 +8,36 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * DTO utilizado para o cadastro de novos produtos na aplicação.
+ *
+ * <p>Contém os campos necessários para a criação de um produto, com validações aplicadas.</p>
+ */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProdutoCadastroDto {
 
+    /**
+     * Identificador do produto.
+     * <p>Deve ser um número inteiro positivo, validado por expressão regular.</p>
+     */
     @Pattern(regexp = "^[1-9]\\d*$", message = "Deve ser um número positivo")
     private String id;
 
+    /**
+     * Nome do produto.
+     * <p>Não pode ser nulo ou vazio.</p>
+     */
     @NotBlank(message = "O nome não pode Ser nulo")
     private String name;
 
+    /**
+     * Construtor que popula o DTO a partir de uma instância da entidade {@link Produto}.
+     *
+     * @param produto Objeto {@code Produto} a ser convertido.
+     */
     public ProdutoCadastroDto(Produto produto) {
         this.id = produto.getId();
         this.name = produto.getName();
